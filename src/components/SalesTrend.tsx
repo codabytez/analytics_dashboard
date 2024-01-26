@@ -7,6 +7,7 @@ import {
   Title,
   Tooltip,
   Legend,
+  TooltipItem,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 
@@ -112,8 +113,11 @@ const SalesTrend: FC<SalesTrendProps> = ({ theme }) => {
         },
         ticks: {
           stepSize: sortBy === "weekly" ? 1 : sortBy === "monthly" ? 2 : 5,
-          callback: function (value: number) {
-            return value === 0 ? "0" : value.toFixed(2);
+          callback: function (tickValue: string | number) {
+            if (typeof tickValue === "number") {
+              return tickValue === 0 ? "0" : tickValue.toFixed(2);
+            }
+            return tickValue;
           },
         },
       },
@@ -128,13 +132,14 @@ const SalesTrend: FC<SalesTrendProps> = ({ theme }) => {
         backgroundColor: theme === "light" ? "#090C2C" : "#34CAA5",
         titleColor: "white",
         bodyColor: "white",
-        displayColors: false, // Don't display the color box
+        displayColors: false,
         callbacks: {
           title: function () {
-            return ""; // Don't display the dataset label
+            return "";
           },
-          label: function (context: string) {
-            return "   " + "$" + context.raw.toFixed(2).toString() + "   "; // Add spaces to the left and right of the label
+          label: function (context: TooltipItem<"bar">) {
+            const rawValue = context.raw as number;
+            return "   " + "$" + rawValue.toFixed(2).toString() + "   ";
           },
         },
       },
@@ -154,7 +159,9 @@ const SalesTrend: FC<SalesTrendProps> = ({ theme }) => {
           <select
             className="rounded-[20px] py-1.5 px-3 outline-none border border-[#E1DFDF] dark:border-neutral-700 text-[#3A3F51] dark:text-neutral-300 text-Medium font-medium bg-transparent"
             value={sortBy}
-            onChange={(e) => setSortBy(e.target.value as any)}
+            onChange={(e) =>
+              setSortBy(e.target.value as "yearly" | "monthly" | "weekly")
+            }
           >
             <option value="yearly">Yearly</option>
             <option value="monthly">Monthly</option>
