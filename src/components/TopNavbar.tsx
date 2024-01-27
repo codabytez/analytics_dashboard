@@ -15,8 +15,8 @@ interface TopNavbarProps {
 
 const TopNavbar: FC<TopNavbarProps> = ({ theme, isOpen, setIsOpen }) => {
   return (
-    <div className="flex pt-[18px] flex-col justify-end items-start gap-[18px] bg-[#FAFAFA] dark:bg-dark fixed z-50">
-      <div className="flex px-3 w-full justify-between items-center max-w-[1440px] relative">
+    <div className="flex pt-[18px] flex-col justify-end items-start gap-[18px] bg-[#FAFAFA] dark:bg-dark fixed z-10">
+      <div className="flex px-3 w-full sm:w-[calc(100%-80px)] justify-between items-center max-w-[1300px] relative sm:left-[80px]">
         <button
           className="sm:hidden absolute left-4 sm:left-0 z-10"
           onClick={() => setIsOpen(!isOpen)}
@@ -52,7 +52,7 @@ const TopNavbar: FC<TopNavbarProps> = ({ theme, isOpen, setIsOpen }) => {
           </svg>
         </button>
         <div
-          className="flex ml-12 sm:ml-0 xl:w-[400px] minitop:w-[600px] desktop:w-[810px] justify-between items-center gap-4"
+          className="flex ml-12 sm:ml-0 xl:w-[400px] minitop:w-[600px] desktop:w-[700px] justify-between items-center gap-4"
           onClick={() => setIsOpen(false)}
         >
           <h5 className="text-H_5 text-[#26282C] dark:text-neutral-200">
@@ -90,12 +90,12 @@ const TopNavbar: FC<TopNavbarProps> = ({ theme, isOpen, setIsOpen }) => {
             </div>
           </div>
 
-          <div className="flex py-1.5 px-2 justify-center items-center gap-3 rounded-3xl border border-[#DADDDD]">
+          <div className="flex sm:py-1.5 sm:px-2 justify-center items-center gap-3 rounded-[40px] border border-[#DADDDD]">
             <div className="flex items-center gap-2">
               <img
                 src={userProfile}
                 alt="User"
-                className="w-[38px] h-[38px] object-cover"
+                className="min-w-[38px] min-h-[38px] object-cover"
               />
               <div className="hidden md:flex flex-col items-end gap-1">
                 <p className="text-[#26282C] dark:text-neutral-200 text-right">
@@ -114,7 +114,7 @@ const TopNavbar: FC<TopNavbarProps> = ({ theme, isOpen, setIsOpen }) => {
           </div>
         </div>
       </div>
-      <div className="w-screen h-[1px] bg-[#E5EAEF]" />
+      <div className="w-screen max-w-[1440px] h-[1px] bg-[#E5EAEF]" />
     </div>
   );
 };

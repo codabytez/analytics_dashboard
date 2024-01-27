@@ -34,7 +34,7 @@ const Dashboard: FC = () => {
   }, [theme]);
 
   return (
-    <div className="flex justify-center items-start bg-white dark:bg-dark max-w-[1440px] relative h-full">
+    <div className="flex justify-center items-start bg-white dark:bg-dark max-w-[1440px] mx-auto relative h-full">
       <SideNavbar
         activeTab={activeTab}
         setActiveTab={setActiveTab}

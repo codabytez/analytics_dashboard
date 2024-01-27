@@ -65,7 +65,7 @@ const SideNavbar: FC<SideNavbarProps> = ({
 }) => {
   return (
     <nav
-      className={`flex w-20 py-5 z-20 fixed top-[90px] left-0 flex-col items-center gap-2.5 shrink-0 border-r border-[#EBECF2] bg-[#F7F8FA] dark:bg-dark transform transition-transform duration-200 ease-in-out h-full ${
+      className={`flex w-20 py-5 z-20 fixed desktop:absolute top-[90px] sm:top-0 left-0 flex-col items-center gap-2.5 shrink-0 border-r border-[#EBECF2] bg-[#F7F8FA] dark:bg-dark transform transition-transform duration-200 ease-in-out h-full ${
         isOpen ? "translate-x-0" : "-translate-x-full sm:translate-x-0"
       }`}
     >

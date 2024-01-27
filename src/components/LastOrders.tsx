@@ -1,10 +1,11 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import marcus from "../assets/marcus.png";
 import jaydon from "../assets/jaydon.png";
 import corey from "../assets/corey.png";
 import cooper from "../assets/cooper.png";
 import phillip from "../assets/phillip.png";
 import { DocumentDownload } from "iconsax-react";
+import ViewReciptModal from "./ViewReciptModal";
 
 interface LastOrdersProps {
   theme: "light" | "dark";
@@ -16,6 +17,8 @@ interface OrderProps {
   date: string;
   amount: string;
   status: string;
+  reference: string;
+  transactionId: string;
 }
 
 const orders: OrderProps[] = [
@@ -25,6 +28,8 @@ const orders: OrderProps[] = [
     date: "Nov 15, 2023",
     amount: "$80,000",
     status: "Paid",
+    reference: String(Math.floor(Math.random() * 100000000000000000)) + "AD",
+    transactionId: String(Math.floor(Math.random() * 100000000000000)) + "AD",
   },
   {
     image: jaydon,
@@ -32,6 +37,8 @@ const orders: OrderProps[] = [
     date: "Nov 15, 2023",
     amount: "$150,000",
     status: "Refund",
+    reference: String(Math.floor(Math.random() * 100000000000000000)) + "AD",
+    transactionId: String(Math.floor(Math.random() * 100000000000000)) + "AD",
   },
   {
     image: corey,
@@ -39,6 +46,8 @@ const orders: OrderProps[] = [
     date: "Nov 14, 2023",
     amount: "$87,000",
     status: "Paid",
+    reference: String(Math.floor(Math.random() * 100000000000000000)) + "AD",
+    transactionId: String(Math.floor(Math.random() * 100000000000000)) + "AD",
   },
   {
     image: cooper,
@@ -46,6 +55,8 @@ const orders: OrderProps[] = [
     date: "Nov 14, 2023",
     amount: "$100,000",
     status: "Refund",
+    reference: String(Math.floor(Math.random() * 100000000000000000)) + "AD",
+    transactionId: String(Math.floor(Math.random() * 100000000000000)) + "AD",
   },
   {
     image: phillip,
@@ -53,10 +64,20 @@ const orders: OrderProps[] = [
     date: "Nov 13, 2023",
     amount: "$78,000",
     status: "Paid",
+    reference: String(Math.floor(Math.random() * 100000000000000000)) + "AD",
+    transactionId: String(Math.floor(Math.random() * 100000000000000)) + "AD",
   },
 ];
 
 const LastOrders: FC<LastOrdersProps> = ({ theme }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentOrder, setCurrentOrder] = useState<OrderProps | null>(null);
+
+  const openModal = (order: OrderProps) => {
+    setCurrentOrder(order);
+    setIsModalOpen(true);
+  };
+
   return (
     <div className="lg:w-[806px] lg:h-[422px] rounded-[14px] bg-white dark:bg-transparent flex flex-col justify-between items-center p-5 border border-[#EDF2F7] dark:border-neutral-700">
       <div className="flex w-full lg:w-[766px] justify-between items-center mb-8 lg:mb-2">
@@ -127,7 +148,10 @@ const LastOrders: FC<LastOrdersProps> = ({ theme }) => {
                 </span>
                 {order.status}
               </p>
-              <button className="py-2 px-4 mt-4 lg:mt-0 lg:px-0 flex w-full lg:w-20 justify-center sm:justify-end lg:justify-start items-center gap-1.5 sm:absolute top-[20%] right-3 lg:relative lg:top-0 lg:right-0 shrink-0 group transition-all duration-200">
+              <button
+                className="py-2 px-4 mt-4 lg:mt-0 lg:px-0 flex w-full lg:w-20 justify-center sm:justify-end lg:justify-start items-center gap-1.5 sm:absolute top-[20%] right-3 lg:relative lg:top-0 lg:right-0 shrink-0 group transition-all duration-200"
+                onClick={() => openModal(order)}
+              >
                 <DocumentDownload
                   size={16}
                   color={theme === "light" ? "#292D32" : "#fff"}
@@ -138,6 +162,18 @@ const LastOrders: FC<LastOrdersProps> = ({ theme }) => {
               </button>
             </div>
             <div className="lg:hidden h-[1px] self-stretch bg-[#EDF2F6]" />
+            {isModalOpen && currentOrder && (
+              <ViewReciptModal
+                isModalOpen={isModalOpen}
+                setIsModalOpen={setIsModalOpen}
+                amount={currentOrder.amount}
+                date={currentOrder.date}
+                sender={currentOrder.name}
+                reference={currentOrder.reference}
+                transactionId={currentOrder.transactionId}
+                status={currentOrder.status}
+              />
+            )}
           </div>
         ))}
         <button className="flex lg:hidden w-full py-2 px-4 justify-center items-center gap-2.5 rounded-[20px] bg-[#D9FFF6] hover:bg-primary transition-all duration-200 max-w-[300px] mx-auto">

@@ -29,14 +29,14 @@ const topPlatforms: TopPlatformProps[] = [
     name: "Toy Troop",
     amount: "$1,200,000",
     percentage: "+8%",
-    width: "27.02%",
+    width: "30.02%",
     color: "#FFB74A",
   },
   {
     name: "XStore",
     amount: "$600,000",
     percentage: "+5%",
-    width: "27.02%",
+    width: "20.02%",
     color: "#FF4A55",
   },
 ];
@@ -62,7 +62,7 @@ const variants = {
 const SalesReport: FC<SalesReportProps> = () => {
   return (
     <motion.div
-      className="rounded-lg pt-4 pr-4 pb-8 pl-5 bg-white dark:bg-transparent inline-flex flex-col justify-between items-start gap-5 max-w-[806px]"
+      className="rounded-lg pt-4 pr-4 pb-8 pl-5 bg-white dark:bg-transparent inline-flex flex-col justify-between items-start gap-5 max-w-[806px] desktop:h-[496px] desktop:overflow-scroll"
       variants={variants}
     >
       <motion.div
