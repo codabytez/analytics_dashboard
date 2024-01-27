@@ -10,6 +10,7 @@ import {
   TooltipItem,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
+import { ArrowDown2 } from "iconsax-react";
 
 ChartJS.register(
   CategoryScale,
@@ -31,14 +32,14 @@ interface sortBy {
 const yearlySales: sortBy[] = [
   { name: "Jan", sales: 6.0 },
   { name: "Feb", sales: 21.0 },
-  { name: "Mar", sales: 3.0 },
+  { name: "Mar", sales: 6.0 },
   { name: "Apr", sales: 27.0 },
   { name: "May", sales: 8.0 },
   { name: "Jun", sales: 46.0 },
   { name: "Jul", sales: 9.0 },
   { name: "Aug", sales: 23.0 },
   { name: "Sep", sales: 33.0 },
-  { name: "Oct", sales: 4.0 },
+  { name: "Oct", sales: 7.0 },
   { name: "Nov", sales: 30.0 },
   { name: "Dec", sales: 22.0 },
 ];
@@ -84,16 +85,18 @@ const SalesTrend: FC<SalesTrendProps> = ({ theme }) => {
       {
         label: "Sales",
         data: salesData.map((d) => d.sales),
-        backgroundColor: gradient,
+        backgroundColor: "#34CAA51A",
         borderColor: "rgba(52, 202, 165, 0.30)",
         borderWidth: 0,
         borderRadius: 20,
         maxBarThickness: 50,
+        hoverBackgroundColor: gradient,
       },
     ],
   };
 
   const options = {
+    maintainAspectRatio: false,
     scales: {
       x: {
         barPercentage: 0.5,
@@ -147,8 +150,8 @@ const SalesTrend: FC<SalesTrendProps> = ({ theme }) => {
   };
 
   return (
-    <div className="w-[806px] h-[374px] rounded-[14px] bg-white dark:bg-transparent flex flex-col justify-between items-center px-6 py-2 border border-[#EDF2F7] dark:border-neutral-700">
-      <div className="flex w-[766px] justify-between items-center">
+    <div className="lg:w-[806px] h-[374px] rounded-[14px] bg-white dark:bg-transparent flex flex-col justify-between items-center px-2 md:px-6 py-2 border border-[#EDF2F7] dark:border-neutral-700">
+      <div className="flex w-full lg:w-[766px] justify-between items-center">
         <p className="text-[#26282C] dark:text-white text-Xtra-Large font-semibold">
           Sales Trend
         </p>
@@ -156,20 +159,27 @@ const SalesTrend: FC<SalesTrendProps> = ({ theme }) => {
           <p className="text-[#3A3F51] dark:text-white text-Medium font-medium">
             Sort by:
           </p>
-          <select
-            className="rounded-[20px] py-1.5 px-3 outline-none border border-[#E1DFDF] dark:border-neutral-700 text-[#3A3F51] dark:text-neutral-300 text-Medium font-medium bg-transparent"
-            value={sortBy}
-            onChange={(e) =>
-              setSortBy(e.target.value as "yearly" | "monthly" | "weekly")
-            }
-          >
-            <option value="yearly">Yearly</option>
-            <option value="monthly">Monthly</option>
-            <option value="weekly">Weekly</option>
-          </select>
+          <div className="relative">
+            <select
+              className="appearance-none rounded-[20px] py-1.5 pr-8 pl-3 outline-none border border-[#E1DFDF] dark:border-neutral-700 text-[#3A3F51] dark:text-neutral-300 text-Medium font-medium bg-transparent"
+              value={sortBy}
+              onChange={(e) =>
+                setSortBy(e.target.value as "yearly" | "monthly" | "weekly")
+              }
+            >
+              <option value="yearly">Yearly</option>
+              <option value="monthly">Monthly</option>
+              <option value="weekly">Weekly</option>
+            </select>
+            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+              <ArrowDown2 size={20} />
+            </div>
+          </div>
         </div>
       </div>
-      <Bar height={300} width={700} options={options} data={chartData} />
+      <div className="h-[300px] w-full max-w-[1000px]">
+        <Bar height={300} options={options} data={chartData} />
+      </div>
     </div>
   );
 };

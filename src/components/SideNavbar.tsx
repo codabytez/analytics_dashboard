@@ -16,8 +16,10 @@ import {
 
 interface SideNavbarProps {
   activeTab: string | null;
-  setActiveTab: (tab: string | null) => void;
   theme: "light" | "dark";
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
+  setActiveTab: (tab: string | null) => void;
   setTheme: (theme: "light" | "dark") => void;
 }
 
@@ -58,18 +60,35 @@ const SideNavbar: FC<SideNavbarProps> = ({
   setActiveTab,
   theme,
   setTheme,
+  isOpen,
+  setIsOpen,
 }) => {
   return (
-    <nav className="flex w-20 py-5 flex-col items-center gap-2.5 shrink-0 border-r border-[#EBECF2] bg-[#F7F8FA] dark:bg-secondary">
-      <div className="flex flex-col items-center gap-[190px] self-stretch w-full relative">
-        <div className="flex flex-col items-center gap-7 w-full">
-          <img src={logo} alt="logo" />
-          <div className="flex flex-col items-center gap-4 self-stretch w-full">
+    <nav
+      className={`flex w-20 py-5 z-20 fixed top-[90px] left-0 flex-col items-center gap-2.5 shrink-0 border-r border-[#EBECF2] bg-[#F7F8FA] dark:bg-dark transform transition-transform duration-200 ease-in-out h-full ${
+        isOpen ? "translate-x-0" : "-translate-x-full sm:translate-x-0"
+      }`}
+    >
+      <div className="flex flex-col items-center justify-between h-[calc(100%-90px)]  self-stretch w-full relative">
+        <div className="flex flex-col items-center gap-3 md:gap-7 w-full">
+          <img
+            className="cursor-pointer transition-all duration-200 hover:scale-110"
+            src={logo}
+            alt="logo"
+            onClick={() => {
+              setActiveTab("dashboard");
+              setIsOpen(false);
+            }}
+          />
+          <div className="flex flex-col items-center gap-2 md:gap-4 self-stretch w-full">
             {tabs.map((tab, i) => (
               <div
                 key={i}
                 className="flex h-10 w-full p-2.5 justify-center items-center self-stretch hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-all duration-300 cursor-pointer"
-                onClick={() => setActiveTab(tab.name)}
+                onClick={() => {
+                  setActiveTab(tab.name);
+                  setIsOpen(false);
+                }}
               >
                 <tab.icon
                   color={
@@ -120,9 +139,24 @@ const SideNavbar: FC<SideNavbarProps> = ({
           </div>
         </div>
         <div className="flex w-full flex-col items-center gap-4 border-error">
-          <ArrowCircleRight2 color="#B2ABAB" variant="Broken" />
-          <Setting2 color="#B2ABAB" variant="Broken" />
-          <Logout color="#B2ABAB" variant="Broken" />
+          <div className="w-full flex justify-center items-center cursor-pointer py-1 px-4 group">
+            <ArrowCircleRight2
+              className="text-[#B2ABAB] group-hover:text-success duration-200"
+              variant="Broken"
+            />
+          </div>
+          <div className="w-full flex justify-center items-center cursor-pointer py-1 px-4 group">
+            <Setting2
+              className="text-[#B2ABAB] group-hover:text-warning duration-200"
+              variant="Broken"
+            />
+          </div>
+          <div className="w-full flex justify-center items-center cursor-pointer py-1 px-4 group">
+            <Logout
+              className="text-[#B2ABAB] group-hover:text-error duration-200"
+              variant="Broken"
+            />
+          </div>
         </div>
       </div>
     </nav>

@@ -2,7 +2,7 @@ import Dashboard from "./Dashboard";
 
 function App() {
   return (
-    <main className="dark:bg-secondary h-screen overflow-hidden">
+    <main className="dark:bg-dark h-full min-h-screen min-w-[340px] relative">
       <Dashboard />
     </main>
   );

@@ -4,13 +4,15 @@ import Content from "./Content";
 
 interface ContentProps {
   theme: "light" | "dark";
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
 }
 
-const Container: FC<ContentProps> = ({ theme }) => {
+const Container: FC<ContentProps> = ({ theme, isOpen, setIsOpen }) => {
   return (
-    <div className="w-[1360px] max-h-[1080px] overflow-y-auto overflow-x-hidden bg-[#FAFAFA] dark:bg-transparent ">
-      <TopNavbar theme={theme} />
-      <Content theme={theme} />
+    <div className="w-[1440px] lg:overflow-y-scroll lg:overflow-x-hidden bg-[#FAFAFA] dark:bg-dark">
+      <TopNavbar theme={theme} isOpen={isOpen} setIsOpen={setIsOpen} />
+      <Content theme={theme} setIsOpen={setIsOpen} />
     </div>
   );
 };

@@ -3,6 +3,8 @@ import SideNavbar from "./SideNavbar";
 import Container from "./Container";
 
 const Dashboard: FC = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
   const [activeTab, setActiveTab] = useState<string | null>("dashboard");
   const [theme, setTheme] = useState<"light" | "dark">(
     () =>
@@ -32,14 +34,16 @@ const Dashboard: FC = () => {
   }, [theme]);
 
   return (
-    <div className="flex justify-center items-start bg-white dark:bg-secondary max-w-[1440px] mx-auto">
+    <div className="flex justify-center items-start bg-white dark:bg-dark max-w-[1440px] relative h-full">
       <SideNavbar
         activeTab={activeTab}
         setActiveTab={setActiveTab}
         theme={theme}
         setTheme={setTheme}
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
       />
-      <Container theme={theme} />
+      <Container theme={theme} isOpen={isOpen} setIsOpen={setIsOpen} />
     </div>
   );
 };

@@ -4,6 +4,7 @@ import OrderSvg from "./OrderSvg";
 import RefundSvg from "./RefundSvg";
 import SalesSvg from "./SalesSvg";
 import IncomeSvg from "./IncomeSvg";
+import { motion } from "framer-motion";
 
 interface TrendsSummaryProps {
   theme: "light" | "dark";
@@ -54,20 +55,47 @@ const trends: TrendProps[] = [
 ];
 
 const TrendsSummary: FC<TrendsSummaryProps> = ({ theme }) => {
+  const containerVariants = {
+    hover: {
+      backgroundColor: theme === "light" ? "#E5E5E5" : "#3A3F51",
+      scale: 1.03,
+      transition: {
+        type: "tween",
+        duration: 0.5,
+      },
+    },
+    initial: {
+      scale: 1,
+      backgroundColor: theme === "light" ? "#fff" : "#2b2b2b",
+    },
+  };
+
+  const iconVariants = {
+    hover: { backgroundColor: "#0D062D" },
+    initial: { backgroundColor: theme === "light" ? "#fff" : "#2b2b2b" },
+  };
+
   return (
-    <div className="grid grid-cols-2 gap-4">
+    <motion.div className="grid grid-cols-1 sm:grid-cols-2 minitop:grid-cols-1 desktop:grid-cols-2 gap-4 max-w-[806px] select-none">
       {trends.map((trend, i) => (
-        <div
-          key={i}
-          className="p-3 inline-flex flex-col shrink-0 gap-2.5 rounded-[14px] border border-[#EDF2F7] bg-white dark:bg-neutral-700/30"
+        <motion.div
+          key={`${i}-${theme}`}
+          className="py-4 px-3 inline-flex flex-col shrink-0 gap-2.5 rounded-[14px] border border-[#EDF2F7] bg-white dark:bg-neutral-700/30 cursor-pointer"
+          variants={containerVariants}
+          initial="initial"
+          whileHover="hover"
+          onHoverEnd={() => containerVariants.initial}
         >
-          <div className="flex w-[207px] justify-between items-center">
-            <div className="w-10 h-10 flex justify-center items-center shrink-0 rounded-full border border-[#E6E6E6]">
+          <div className="flex w-full desktop:w-[207px] justify-between items-center">
+            <motion.div
+              className="w-10 h-10 flex justify-center items-center shrink-0 rounded-full border border-[#E6E6E6]"
+              variants={iconVariants}
+            >
               <trend.icon
                 variant="Bulk"
                 color={theme === "light" ? "#34CAA5" : "#F5F5F5"}
               />
-            </div>
+            </motion.div>
             <trend.trendComponent />
           </div>
           <div className="flex flex-col items-start gap-1">
@@ -137,9 +165,9 @@ const TrendsSummary: FC<TrendsSummaryProps> = ({ theme }) => {
             </div>
             <p className="text-[#606060] text-Medium">vs. previous month</p>
           </div>
-        </div>
+        </motion.div>
       ))}
-    </div>
+    </motion.div>
   );
 };
 

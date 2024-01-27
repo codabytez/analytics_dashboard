@@ -11,6 +11,7 @@ export default {
         error: "#ED544E",
         warning: "#F4C700",
         background: "#FDFDFD",
+        dark: "#181818",
         neutral: {
           50: "#FAFAFA",
           100: "#F5F5F5",
@@ -93,6 +94,10 @@ export default {
             lineHeight: "24px",
           },
         ],
+      },
+      screens: {
+        minitop: "1200px",
+        desktop: "1440px",
       },
     },
   },
